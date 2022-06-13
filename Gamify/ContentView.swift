@@ -55,87 +55,89 @@ struct SignView: View {
     }
 }
 
-struct TextBox: View {
-    @State var placeholder: String = ""
-    @State var content: Binding<String>
-    @State var isSensitive: Bool
-    
-    init(
-        placeholder: String,
-        content: Binding<String>,
-        isSensitive: Bool = false
-    )
-    {
-        self.placeholder = placeholder
-        self.content = content
-        self.isSensitive = isSensitive
-    }
-    
-    var body: some View {
-        VStack {
-            ZStack(alignment: .leading) {
-                if content.wrappedValue == "" {
-                    Text(placeholder).font(.caption).foregroundColor(Color.gray)
-                }
-                
-                if isSensitive {
-                    SecureField("", text: content)
-                        .foregroundColor(.white)
-                } else {
-                    TextField("", text: content)
-                        .foregroundColor(.white)
-                }
-            }
-            
-            Divider().frame(
-                height: 1
-            ).background(Color("DarkCian"))
-                .padding(.bottom)
-        }
-    }
-}
-
-
-
-struct SignInView: View {
+struct SignUpView: View {
     
     @State var mail: String = ""
-    
     @State var password: String = ""
-
+    @State var passwordConfirmation: String = ""
+    
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading) {
-                Text("Correo electronico")
+            VStack(alignment: .center) {
+                Text("Elige una foto de perfil")
                     .foregroundColor(.white)
-                
-                TextBox(
-                    placeholder: "email@ejemplo.com",
-                    content: $mail)
-                
-                Text("Contraseña")
+                    .fontWeight(.bold)
+                Text("Puedes cambiar o elegir otra más adelante")
+                    .font(.caption)
                     .foregroundColor(.white)
+                    .multilineTextAlignment(.center)
+                    .opacity(0.3)
                 
-                TextBox(
-                    placeholder: "Password",
-                    content: $password,
-                    isSensitive: true
-                )
-                
-                Text("¿Olvidaste tu contraseña?")
-                    .font(.footnote)
-                    .frame(
-                        width: 300,
-                        alignment: .trailing
-                    ).foregroundColor(.white)
-                    .opacity(0.6)
-                    .padding(.bottom)
-                
-                
-                Button(action: {
+                ZStack {
                     
-                }, label: {
-                    Text("INICIAR SESION")
+                    Image("DummyProfile")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(
+                            width: 80,
+                            height: 80
+                        )
+                    
+                    
+                    Image(systemName: "camera")
+                        .foregroundColor(.white)
+                        .frame(
+                            width: 80,
+                            height: 80
+                        )
+                }
+                
+                Spacer(minLength: 50)
+                
+                VStack {
+                    Text("Correo electronico")
+                        .foregroundColor(.white)
+                        .fontWeight(.bold)
+                        .frame(
+                            width: 300,
+                            alignment: .leading)
+                    
+                    TextBox(
+                        placeholder: "ejemplo@gmail.com",
+                        content: $mail
+                    )
+                    
+                    Text("Password")
+                        .foregroundColor(.white)
+                        .fontWeight(.bold)
+                        .frame(
+                            maxWidth: .infinity,
+                            alignment: .leading
+                        )
+                    
+                    TextBox(
+                        placeholder: "Password",
+                        content: $password,
+                        isSensitive: true
+                    )
+                    
+                    Text("Confirm password")
+                        .foregroundColor(.white)
+                        .fontWeight(.bold)
+                        .frame(
+                            maxWidth: .infinity,
+                            alignment: .leading
+                        )
+                    
+                    TextBox(
+                        placeholder: "Password",
+                        content: $passwordConfirmation,
+                        isSensitive: true
+                    )
+                }
+                
+                Button(action: {}, label: {
+                    Text("REGISTRATE")
                         .fontWeight(.bold)
                         .foregroundColor(.white)
                         .frame(
@@ -155,12 +157,12 @@ struct SignInView: View {
                                 .stroke(Color("DarkCian"), lineWidth: 1.0)
                                 .shadow(color: .white, radius: 3)
                         )
-                        
                 })
+                
                 
                 Spacer(minLength: 35)
                 
-                Text("Inicia sesion con redes sociales")
+                Text("Registrate con redes sociales")
                     .foregroundColor(.white)
                     .padding()
                     .frame(
@@ -205,16 +207,8 @@ struct SignInView: View {
                     Spacer()
                 }
                 
-            }.padding(.horizontal, 77)
-        }
-    }
-}
-
-struct SignUpView: View {
-    var body: some View {
-        VStack {
-            
-            Text("Signup View")
+            }
+            .padding(.horizontal, 77)
         }
     }
 }
