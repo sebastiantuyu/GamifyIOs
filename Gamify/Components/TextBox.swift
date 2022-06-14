@@ -9,9 +9,9 @@ import SwiftUI
 
 struct TextBox: View {
     @State var placeholder: String = ""
-    @State var content: Binding<String>
+    @Binding var content: String
     @State var isSensitive: Bool
-    
+
     init(
         placeholder: String,
         content: Binding<String>,
@@ -19,22 +19,22 @@ struct TextBox: View {
     )
     {
         self.placeholder = placeholder
-        self.content = content
+        _content = content
         self.isSensitive = isSensitive
     }
     
     var body: some View {
         VStack {
             ZStack(alignment: .leading) {
-                if content.wrappedValue.isEmpty {
+                if $content.wrappedValue.isEmpty {
                     Text(placeholder).font(.caption).foregroundColor(Color.gray)
                 }
                 
                 if isSensitive {
-                    SecureField("", text: content)
+                    SecureField("", text: $content)
                         .foregroundColor(.white)
                 } else {
-                    TextField("", text: content)
+                    TextField("", text: $content)
                         .foregroundColor(.white)
                 }
             }

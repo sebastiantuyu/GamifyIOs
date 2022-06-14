@@ -12,13 +12,21 @@ struct SignInView: View {
     @State var mail: String = ""
     
     @State var password: String = ""
+    
+    @State var isHomeActive: Bool = false
+    
+    func loginAndRedirect() {
+        // Do login
+        
+        isHomeActive = true
+    }
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
                 Text("Correo electronico")
                     .foregroundColor(.white)
-                
+
                 TextBox(
                     placeholder: "email@ejemplo.com",
                     content: $mail)
@@ -42,9 +50,7 @@ struct SignInView: View {
                     .padding(.bottom)
                 
                 
-                Button(action: {
-                    
-                }, label: {
+                Button(action: loginAndRedirect, label: {
                     Text("INICIAR SESION")
                         .fontWeight(.bold)
                         .foregroundColor(.white)
@@ -116,6 +122,13 @@ struct SignInView: View {
                 }
                 
             }.padding(.horizontal, 77)
+            
+            
+            NavigationLink(
+                destination: HomeScreen(),
+                isActive: $isHomeActive,
+                label: {EmptyView()}
+            )
         }
     }
 }
